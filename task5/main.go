@@ -2,50 +2,31 @@ package main
 
 import (
 	"bufio"
-	"context"
+
 	"fmt"
 	"log"
 	"os"
 	"strconv"
+	"sync"
 	"time"
 )
 
-func readerWorker(c chan string, ctx context.Context) {
+// Simple worker which just print data from channel
+func readerWorker(c chan string, wg *sync.WaitGroup) {
+	defer wg.Done()
+
+	// Read data from channel and break loop on channel closed
 	for str := range c {
-		select {
-		case <-ctx.Done():
-			fmt.Println("Reader worker is finished")
-			return
-		default:
-			fmt.Printf("Data received from channel: %s", str)
-		}
+		fmt.Printf("Data received from channel: %s", str)
 	}
-	fmt.Println("Reader worker is finished")
-}
-
-func writerWorker(c chan string, ctx context.Context) {
-	reader := bufio.NewReader(os.Stdin)
-
-	for {
-		select {
-		case <-ctx.Done():
-			fmt.Println("Writer worker is finished")
-			return
-		default:
-			data, err := reader.ReadString('\n')
-			if err != nil {
-				log.Printf("ERROR: %s", err)
-				break
-			}
-			c <- data
-		}
-	}
-	fmt.Println("Writer worker is finished")
+	// Marker, which indicates, that worker is finished successfully
+	log.Println("INFO: Reader worker is finished")
 }
 
 func main() {
 	var seconds_str string
 
+	fmt.Println("Enter program TTL in seconds")
 	_, err := fmt.Scanln(&seconds_str)
 	if err != nil {
 		log.Fatal(err)
@@ -58,13 +39,29 @@ func main() {
 
 	c := make(chan string, 1)
 
-	ctx, cancel := context.WithCancel(context.Background())
+	// Create wait group for correctly terminating goroutines
+	wg := sync.WaitGroup{}
 
-	go readerWorker(c, ctx)
-	go writerWorker(c, ctx)
+	wg.Add(1)
+	go readerWorker(c, &wg)
 
-	time.Sleep(time.Second * time.Duration(seconds))
+	end := time.Now().Add(time.Second * time.Duration(seconds))
+	reader := bufio.NewReader(os.Stdin)
+
+	// Loop for program TTL
+	for now := time.Now(); now.Unix() < end.Unix(); now = time.Now() {
+		data, err := reader.ReadString('\n')
+		if err != nil {
+			log.Printf("ERROR: %s", err)
+			break
+		}
+		// Send data to channel
+		c <- data
+	}
 	close(c)
-	cancel()
-	time.Sleep(time.Second)
+
+	// Wait until reader worker will successfully finish his work
+	wg.Wait()
+
+	log.Println("INFO: Exiting program due to expiration of TTL")
 }
