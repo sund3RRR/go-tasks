@@ -11,6 +11,8 @@ import (
 	"time"
 )
 
+const taskNum = 5
+
 // Simple worker which just print data from channel
 func readerWorker(c chan string, wg *sync.WaitGroup) {
 	defer wg.Done()
@@ -23,7 +25,7 @@ func readerWorker(c chan string, wg *sync.WaitGroup) {
 	log.Println("INFO: Reader worker is finished")
 }
 
-func main() {
+func doTask() {
 	var seconds_str string
 
 	fmt.Println("Enter program TTL in seconds")
@@ -64,4 +66,12 @@ func main() {
 	wg.Wait()
 
 	log.Println("INFO: Exiting program due to expiration of TTL")
+}
+
+func main() {
+	fmt.Printf("\nStart task %d\n\n", taskNum)
+
+	doTask()
+
+	fmt.Printf("\nEnd of the task %d\n", taskNum)
 }
