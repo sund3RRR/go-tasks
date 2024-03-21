@@ -10,6 +10,8 @@ import (
 	"sync"
 )
 
+const taskNum = 4
+
 // Simple worker which just print data from channel
 func worker(c chan string, wg *sync.WaitGroup, workerID int) {
 	defer wg.Done()
@@ -23,9 +25,8 @@ func worker(c chan string, wg *sync.WaitGroup, workerID int) {
 	fmt.Printf("Worker %d is finished\n", workerID)
 }
 
-func main() {
+func doTask() {
 	fmt.Println("Enter number of workers")
-
 	// Read number of workers from cmd in string
 	var workers_str string
 	_, err := fmt.Scanln(&workers_str)
@@ -85,4 +86,12 @@ loop:
 
 	// Wait until all workers will successfully finish their job
 	wg.Wait()
+
+}
+func main() {
+	fmt.Printf("\nStart task %d\n\n", taskNum)
+
+	doTask()
+
+	fmt.Printf("\nEnd of the task %d\n", taskNum)
 }
