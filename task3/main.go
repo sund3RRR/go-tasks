@@ -1,4 +1,4 @@
-package task3
+package main
 
 import (
 	"fmt"
@@ -35,12 +35,12 @@ func sqrSum(arr *[]int) int {
 
 	return res
 }
-func DoTask() {
+func main() {
 	fmt.Printf("\nStart task %d\n\n", taskNum)
 
 	arr := []int{2, 4, 6, 8, 10}
 
-	fmt.Printf("Sqr sum: %d", sqrSum(&arr))
+	fmt.Printf("Sqr sum: %d\n", sqrSum(&arr))
 
 	fmt.Printf("\nEnd of the task %d\n", taskNum)
 }
