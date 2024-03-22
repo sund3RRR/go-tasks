@@ -10,10 +10,10 @@ func intersection(first, second *[]int) *[]int {
 		first, second = second, first
 	}
 
-	// Create hash map for lower slice nums
+	// Create hash map for smaller slice
 	hashMap := make(map[int]bool, len(*first))
 
-	// Fill hash map with lower splice nums
+	// Fill hash map with nums from smaller slice
 	for _, num := range *first {
 		hashMap[num] = false
 	}
