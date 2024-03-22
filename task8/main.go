@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-const taskNum = 6
+const taskNum = 8
 
 func setBit(num int64, pos uint, bit uint) int64 {
 	mask := int64(1 << pos)
