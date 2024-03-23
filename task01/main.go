@@ -2,8 +2,6 @@ package main
 
 import "fmt"
 
-const taskNum = 1
-
 type Human struct {
 	Name        string
 	Surname     string
@@ -25,8 +23,6 @@ func (a *Action) Run(steps int) {
 }
 
 func main() {
-	fmt.Printf("\nStart task %d\n\n", taskNum)
-
 	action := Action{
 		Human{
 			Name:        "John",
@@ -38,6 +34,4 @@ func main() {
 
 	action.SayHello()
 	action.Run(20)
-
-	fmt.Printf("\nEnd of the task %d\n", taskNum)
 }

@@ -10,8 +10,6 @@ import (
 	"sync"
 )
 
-const taskNum = 4
-
 // Simple worker which just print data from channel
 func worker(c chan string, wg *sync.WaitGroup, workerID int) {
 	defer wg.Done()
@@ -89,9 +87,5 @@ loop:
 
 }
 func main() {
-	fmt.Printf("\nStart task %d\n\n", taskNum)
-
 	doTask()
-
-	fmt.Printf("\nEnd of the task %d\n", taskNum)
 }

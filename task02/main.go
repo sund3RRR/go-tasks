@@ -5,8 +5,6 @@ import (
 	"sync"
 )
 
-const taskNum = 2
-
 // sqr calculates squares for all nums in an integer array
 func sqr(arr *[]int) {
 	wg := sync.WaitGroup{}
@@ -23,11 +21,7 @@ func sqr(arr *[]int) {
 	wg.Wait()
 }
 func main() {
-	fmt.Printf("\nStart task %d\n\n", taskNum)
-
 	arr := []int{2, 4, 6, 8, 10}
 
 	sqr(&arr)
-
-	fmt.Printf("\nEnd of the task %d\n", taskNum)
 }

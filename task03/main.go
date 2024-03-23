@@ -5,8 +5,6 @@ import (
 	"sync"
 )
 
-const taskNum = 3
-
 // sqrSum calculates the sum of sqr(num) for all nums in an integer array
 func sqrSum(arr *[]int) int {
 	wg := sync.WaitGroup{}
@@ -36,11 +34,7 @@ func sqrSum(arr *[]int) int {
 	return res
 }
 func main() {
-	fmt.Printf("\nStart task %d\n\n", taskNum)
-
 	arr := []int{2, 4, 6, 8, 10}
 
 	fmt.Printf("Sqr sum: %d\n", sqrSum(&arr))
-
-	fmt.Printf("\nEnd of the task %d\n", taskNum)
 }

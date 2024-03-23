@@ -11,8 +11,6 @@ import (
 	"time"
 )
 
-const taskNum = 5
-
 // Simple worker which just print data from channel
 func readerWorker(c chan string, wg *sync.WaitGroup) {
 	defer wg.Done()
@@ -69,9 +67,5 @@ func doTask() {
 }
 
 func main() {
-	fmt.Printf("\nStart task %d\n\n", taskNum)
-
 	doTask()
-
-	fmt.Printf("\nEnd of the task %d\n", taskNum)
 }
