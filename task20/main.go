@@ -6,12 +6,12 @@ import (
 	"strings"
 )
 
-func invertWords(str *string) string {
+func invertWords(str string) string {
 	// Create string builder
 	builder := strings.Builder{}
 
-	// Split string to words
-	splitted := strings.Split(*str, " ")
+	// Split string to wordss
+	splitted := strings.Split(str, " ")
 
 	for i := len(splitted) - 1; i >= 0; i-- {
 		// Write string to builder and add space separator
@@ -29,6 +29,6 @@ func main() {
 	str := "snow dog sun"
 	fmt.Println(str)
 
-	str = invertWords(&str)
+	str = invertWords(str)
 	fmt.Println(str)
 }
