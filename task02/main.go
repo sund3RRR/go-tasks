@@ -1,3 +1,8 @@
+/*
+	Написать программу, которая конкурентно рассчитает значение квадратов
+	чисел взятых из массива (2,4,6,8,10) и выведет их квадраты в stdout.
+*/
+
 package main
 
 import (
@@ -5,12 +10,14 @@ import (
 	"sync"
 )
 
-// sqr calculates squares for all nums in an integer array
-func sqr(arr *[]int) {
+func main() {
+	arr := []int{2, 4, 6, 8, 10}
+
 	wg := sync.WaitGroup{}
 
-	for _, i := range *arr {
-		wg.Add(1)
+	wg.Add(len(arr))
+
+	for _, i := range arr {
 		// Start goroutine for all nums in array
 		go func(i int) {
 			defer wg.Done()
@@ -19,9 +26,4 @@ func sqr(arr *[]int) {
 	}
 
 	wg.Wait()
-}
-func main() {
-	arr := []int{2, 4, 6, 8, 10}
-
-	sqr(&arr)
 }
